@@ -1,0 +1,84 @@
+## 3.1 Lỗi mất boot hoặc grub
+
+**Problem**
+Khi lỗi phân vùng or mất grub thì hê thống sẽ khởi động vào rescure mode hoặc emercency mode
+
+***Rescure mode:***
+
+![4a563300.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/4a563300.png)
+
+**Troubleshooting**
+Sử dụng CD/usb boot có chứa OS tương ứng boot vào rescure mode:
+- Mỗi OS khác nhau sẽ có GUI troubleshooting khác nhau
+
+![ced80752.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/ced80752.png)
+
+Chuyển quyền sang hệ thống thật:
+
+![2735e30f.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/2735e30f.png)
+
+- Với trường hợp không thể sử dụng chroot thì chứng tỏ hệ thống đã không thể tìm thấy hoặc mount phân vùng / và /usr
+
+Kiểm tra các disk của hệ thống:
+
+![73f7ddf2.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/73f7ddf2.png)
+
+Chú ý về các partition (trong trường hợp nếu partition boot bị mất cần tạo lại và config lại /etc/fstab)
+
+Kiểm tra về grub và kernel của hệ thống:
+
+![6a6351e1.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/6a6351e1.png)
+
+- Nhận thấy cả grub lẫn kernel đã bị mất
+
+Downloadl lại kernel
+- Có thể download lại kernel từ source hoăc repo
+- Mặc định khi khởi động vào rescure mode thì hệ thống sẽ không tự động request dhcp
+```
+dhclient -v
+```
+![1e2f3c2f.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/1e2f3c2f.png)
+
+- Kiểm tra lại IP
+
+![5fb906d7.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/5fb906d7.png)
+
+- Kiểm tra kernel có trong repo hay không
+
+```
+yum search kernel
+```
+
+![4425529c.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/4425529c.png)
+
+- Install kernel:
+```
+yum install kernel
+```
+
+- Sau khi cài đặt xong kernel ta có thể thấy các file kernel trong thư mục /boot
+
+![7ce01091.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/7ce01091.png)
+
+Tạo file grub.cfg
+
+- Chọn phân vùng muốn cài grub
+
+![070966d6.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/070966d6.png)
+
+- Tạo file grub.cfg
+
+![b18e00e1.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/b18e00e1.png)
+
+- Kiểm tra:
+
+![8db4fca6.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/8db4fca6.png)
+
+Khởi động lại hệ thống
+- Đã thấy grub được hiển thị
+
+![931ec360.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/931ec360.png)
+
+- Boot vào hệ thống thành công
+
+![98a923fa.png](:storage/1e21e557-d983-4f0e-9a07-ce11a81d126a/98a923fa.png)

@@ -1,0 +1,29 @@
+Quá trình khởi động trên linux chia thành 5 giai đoạn:
+***BIOS***
+- Khi cpu bắt đầu được khởi động thì nó sẽ chạy code được cài sẵn để tìm kiếm firmware
+- Firmware này sẽ khởi động quá trình BIOS, kiểm tra phần cứng hay còn gọi là power on seft test (POST)
+- Tiếp đến nó sẽ tìm kiếm MBR boot loader trong disk tại các sector đầu tiên
+
+***Boot loader***
+
+- Boot loader được khởi động lên sẽ tìm kiếm các phân vùng của các disk
+- Sau đó tìm kiếm phân vùng boot
+- Tại phân vùng boot này nó sẽ tìm kiếm đến file grub.config để bắt đầu quá trình nạp grub
+
+***Grub***
+
+- Bản chất của file grub.config là 1 file script để tìm kiếm và nạp kernel
+- Grub sẽ load định dạng của file system cũng như kernel
+
+**Kernel***
+
+- Kernel sẽ tải 1 bản rút gọn của hệ thống  (initram) vào trong ram
+- Từ initram mount tài nguyên các hệ thống thật
+- umount initram và chuyển hoàn toàn sang hệ thống thật
+
+***Các tiến trình ban đầu***
+
+- Sau khi hệ thống được khởi động nó sẽ tìm kiếm các process cha (trên centos là systemd)
+- Systemd khởi động các tiến trình con của các service tại /etc/systemd
+
+https://www.freecodecamp.org/news/the-linux-booting-process-6-steps-described-in-detail/
